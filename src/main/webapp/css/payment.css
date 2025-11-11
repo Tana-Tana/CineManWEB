@@ -1,0 +1,218 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+    padding: 20px;
+    color: #333;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.invoice-header {
+    background: #4a90e2;
+    color: white;
+    padding: 30px;
+    text-align: center;
+}
+
+.invoice-header h1 {
+    font-size: 24px;
+    margin: 0 0 10px 0;
+}
+
+.invoice-content {
+    padding: 30px;
+}
+
+.section {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.section:last-of-type {
+    border-bottom: none;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #4a90e2;
+    margin-bottom: 15px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #4a90e2;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.info-item .label {
+    font-weight: bold;
+    color: #666;
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+.info-item .value {
+    font-size: 14px;
+    color: #333;
+}
+
+.ticket-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    border: 1px solid #ddd;
+}
+
+.ticket-table thead {
+    background: #4a90e2;
+    color: white;
+}
+
+.ticket-table th {
+    padding: 12px;
+    text-align: left;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.ticket-table td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+.ticket-table tbody tr:hover {
+    background: #f9f9f9;
+}
+
+.ticket-table td.price {
+    font-weight: bold;
+    color: #4a90e2;
+}
+
+.currency {
+    margin-left: 3px;
+}
+
+.total-section {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.total-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.total-amount {
+    color: #4a90e2;
+}
+
+.invoice-footer {
+    background: #f9f9f9;
+    padding: 20px;
+    text-align: center;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.btn-print, .btn-back {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-print {
+    background: #4a90e2;
+    color: white;
+}
+
+.btn-print:hover {
+    background: #357abd;
+}
+
+.btn-back {
+    background: white;
+    color: #4a90e2;
+    border: 1px solid #4a90e2;
+}
+
+.btn-back:hover {
+    background: #4a90e2;
+    color: white;
+}
+
+.thank-you {
+    margin-top: 15px;
+    color: #666;
+    font-size: 13px;
+}
+
+@media print {
+    body {
+        background: white;
+        padding: 0;
+    }
+    .container {
+        box-shadow: none;
+    }
+    .invoice-footer .actions {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        margin: 10px;
+    }
+    .invoice-header {
+        padding: 20px;
+    }
+    .invoice-header h1 {
+        font-size: 20px;
+    }
+    .invoice-content {
+        padding: 20px;
+    }
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+    .total-row {
+        flex-direction: column;
+    }
+    .actions {
+        flex-direction: column;
+    }
+    .btn-print, .btn-back {
+        width: 100%;
+    }
+}
+

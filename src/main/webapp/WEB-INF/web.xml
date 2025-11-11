@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
+         version="6.0">
+
+    <display-name>CineManProject</display-name>
+
+    <!--
+      Vì chúng ta đã dùng Annotation (@WebServlet) để map /login và /register,
+      chúng ta không cần khai báo <servlet> và <servlet-mapping> ở đây.
+
+      File này chỉ cần tồn tại và hợp lệ để Tomcat không báo lỗi.
+    -->
+
+    <!--
+      Thiết lập trang chào mừng (Welcome Page).
+      Khi người dùng gõ: http://localhost:8080/CineManProject/
+      Họ sẽ được tự động chuyển đến servlet /login.
+    -->
+    <welcome-file-list>
+        <welcome-file>login</welcome-file>
+    </welcome-file-list>
+
+</web-app>
