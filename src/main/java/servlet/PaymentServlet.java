@@ -63,6 +63,25 @@ public class PaymentServlet extends HttpServlet {
             totalPayment += ticket.getSeat().getCost();
         }
         
+        float discount = 0;
+        Integer memberId = null;
+        Object customerObj = req.getSession().getAttribute("customer");
+        Customer customer = null;
+        if (customerObj != null && customerObj instanceof Customer) {
+            customer = (Customer) customerObj;
+            memberId = customer.getId();
+            if (customer.getMembershipCard() != null) {
+                int earnedPoint = customer.getMembershipCard().getEarnedPoint();
+                if (earnedPoint >= 1000000) {
+                    discount = totalPayment * 0.1f;
+                    totalPayment = totalPayment - discount;
+                } else if (earnedPoint >= 500000) {
+                    discount = totalPayment * 0.05f;
+                    totalPayment = totalPayment - discount;
+                }
+            }
+        }
+        
         Bill bill = new Bill(totalPayment, member.getId(), tickets);
         
         int billId = billDAO.insertBill(bill);
@@ -71,13 +90,6 @@ public class PaymentServlet extends HttpServlet {
             req.setAttribute("error", "Không thể tạo hóa đơn. Vui lòng thử lại.");
             req.getRequestDispatcher("/JSP/PaymentFrame.jsp").forward(req, resp);
             return;
-        }
-        
-        Integer memberId = null;
-        Object customerObj = req.getSession().getAttribute("customer");
-        if (customerObj != null && customerObj instanceof Customer) {
-            Customer customer = (Customer) customerObj;
-            memberId = customer.getId();
         }
         
         boolean success = ticketDAO.insertTickets(tickets, billId, memberId);
@@ -108,6 +120,8 @@ public class PaymentServlet extends HttpServlet {
             req.setAttribute("error", "Đã xảy ra lỗi: " + e.getMessage());
             req.getRequestDispatcher("/JSP/PaymentFrame.jsp").forward(req, resp);
         }
+
+
     }
 }
 

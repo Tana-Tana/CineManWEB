@@ -66,18 +66,18 @@
                         <span class="field-note">Số điện thoại từ 10-11 chữ số</span>
                     </div>
                 </div>
-
-                <div class="form-actions">
-                    <button type="submit" class="btn btn-primary">
-                        <span class="btn-icon">✓</span>
-                        Đăng ký thẻ thành viên
-                    </button>
-                    <a href="${pageContext.request.contextPath}/main-customer" class="btn btn-secondary">
-                        <span class="btn-icon">←</span>
-                        Quay lại
-                    </a>
-                </div>
             </form>
+
+            <div class="form-actions">
+                <button type="submit" form="registrationForm" class="btn btn-primary">
+                    <span class="btn-icon">✓</span>
+                    Đăng ký thẻ thành viên
+                </button>
+                <a href="${pageContext.request.contextPath}/main-customer" class="btn btn-secondary">
+                    <span class="btn-icon">←</span>
+                    Quay lại
+                </a>
+            </div>
         </div>
     </div>
 </body>

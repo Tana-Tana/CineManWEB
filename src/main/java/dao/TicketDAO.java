@@ -15,32 +15,6 @@ public class TicketDAO extends DAO {
         super();
     }
 
-    public int insertTicket(Ticket ticket) {
-        String sql = "INSERT INTO tblTicket (tblScreeningRoomScheduleId, tblSeatId) VALUES (?, ?)";
-        PreparedStatement pstm = null;
-        ResultSet rs = null;
-        
-        try {
-            pstm = getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            pstm.setInt(1, ticket.getScreeningRoomSchedule().getId());
-            pstm.setInt(2, ticket.getSeat().getId());
-            
-            int rowsAffected = pstm.executeUpdate();
-            
-            if (rowsAffected > 0) {
-                rs = pstm.getGeneratedKeys();
-                if (rs.next()) {
-                    return rs.getInt(1);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        
-        return -1;
-    }
-    
-
     public boolean insertTickets(List<Ticket> tickets, int billId, Integer memberId) {
         String sql = "INSERT INTO tblTicket (tblScreeningRoomScheduleId, tblSeatId, tblBillid, tblMemberid) VALUES (?, ?, ?, ?)";
         PreparedStatement pstm = null;
@@ -93,6 +67,31 @@ public class TicketDAO extends DAO {
                 e.printStackTrace();
             }
         }
+    }
+
+    private int insertTicket(Ticket ticket) {
+        String sql = "INSERT INTO tblTicket (tblScreeningRoomScheduleId, tblSeatId) VALUES (?, ?)";
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+
+        try {
+            pstm = getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            pstm.setInt(1, ticket.getScreeningRoomSchedule().getId());
+            pstm.setInt(2, ticket.getSeat().getId());
+
+            int rowsAffected = pstm.executeUpdate();
+
+            if (rowsAffected > 0) {
+                rs = pstm.getGeneratedKeys();
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return -1;
     }
 }
 

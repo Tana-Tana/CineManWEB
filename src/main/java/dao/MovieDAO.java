@@ -14,8 +14,7 @@ public class MovieDAO extends DAO{
         super();
     }
 
-    public List<Movie> getListMovie()
-    {
+    public List<Movie> getListMovie() {
         List<Movie> listMovie = new ArrayList<>();
         String sql = "SELECT * FROM tblmovie";
         PreparedStatement pstm = null;

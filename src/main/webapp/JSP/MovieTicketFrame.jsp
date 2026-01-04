@@ -44,7 +44,10 @@
                     </div>
                     <div class="info-item">
                         <span class="info-label">Ngày chiếu:</span>
-                        <span class="info-value">${srs.screeningSchedule.showDate}</span>
+                        <span class="info-value">
+                            <c:set var="dateParts" value="${fn:split(srs.screeningSchedule.showDate, '-')}" />
+                            ${dateParts[2]}/${dateParts[1]}/${dateParts[0]}
+                        </span>
                     </div>
                     <div class="info-item">
                         <span class="info-label">Giờ chiếu:</span>
@@ -52,6 +55,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="booking-form-section">
                 <h2>Thông Tin Đặt Vé</h2>
                 

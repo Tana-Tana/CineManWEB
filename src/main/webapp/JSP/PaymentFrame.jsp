@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!DOCTYPE html>
@@ -26,7 +27,10 @@
                     </div>
                     <div class="info-item">
                         <span class="label">Ngày chiếu:</span>
-                        <span class="value">${screeningRoomSchedule.screeningSchedule.showDate}</span>
+                        <span class="value">
+                            <c:set var="dateParts" value="${fn:split(screeningRoomSchedule.screeningSchedule.showDate, '-')}" />
+                            ${dateParts[2]}/${dateParts[1]}/${dateParts[0]}
+                        </span>
                     </div>
                     <div class="info-item">
                         <span class="label">Giờ chiếu:</span>
@@ -95,14 +99,51 @@
             </div>
 
             <div class="section total-section">
+                <c:set var="total" value="0" />
+                <c:forEach var="ticket" items="${tickets}">
+                    <c:set var="total" value="${total + ticket.seat.cost}" />
+                </c:forEach>
+                
+                <c:set var="discount" value="0" />
+                <c:set var="discountPercent" value="0" />
+                <c:if test="${not empty customer and not empty customer.membershipCard}">
+                    <c:set var="earnedPoint" value="${customer.membershipCard.earnedPoint}" />
+                    <c:choose>
+                        <c:when test="${earnedPoint >= 1000000}">
+                            <c:set var="discountPercent" value="10" />
+                            <c:set var="discount" value="${total * 0.1}" />
+                            <div class="discount-notice">
+                                <span class="discount-text">Giảm giá ${discountPercent}% cho thành viên VIP (Điểm tích lũy >= 1,000,000)</span>
+                            </div>
+                            <div class="discount-row">
+                                <span class="discount-label">Giảm giá:</span>
+                                <span class="discount-amount">
+                                    -<fmt:formatNumber value="${discount}" type="number" maxFractionDigits="0" />
+                                    <span class="currency">đ</span>
+                                </span>
+                            </div>
+                        </c:when>
+                        <c:when test="${earnedPoint >= 500000 and earnedPoint < 1000000}">
+                            <c:set var="discountPercent" value="5" />
+                            <c:set var="discount" value="${total * 0.05}" />
+                            <div class="discount-notice">
+                                <span class="discount-text">Giảm giá ${discountPercent}% cho thành viên (Điểm tích lũy >= 500,000)</span>
+                            </div>
+                            <div class="discount-row">
+                                <span class="discount-label">Giảm giá:</span>
+                                <span class="discount-amount">
+                                    -<fmt:formatNumber value="${discount}" type="number" maxFractionDigits="0" />
+                                    <span class="currency">đ</span>
+                                </span>
+                            </div>
+                        </c:when>
+                    </c:choose>
+                </c:if>
+                
                 <div class="total-row">
                     <span class="total-label">Tổng tiền:</span>
                     <span class="total-amount">
-                        <c:set var="total" value="0" />
-                        <c:forEach var="ticket" items="${tickets}">
-                            <c:set var="total" value="${total + ticket.seat.cost}" />
-                        </c:forEach>
-                        <fmt:formatNumber value="${total}" type="number" maxFractionDigits="0" />
+                        <fmt:formatNumber value="${total - discount}" type="number" maxFractionDigits="0" />
                         <span class="currency">đ</span>
                     </span>
                 </div>

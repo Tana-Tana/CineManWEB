@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!DOCTYPE html>
@@ -37,6 +38,8 @@
             
             <c:forEach var="srs" items="${not empty requestScope.listScreeningRoomSchedule ? requestScope.listScreeningRoomSchedule : sessionScope.listScreeningRoomSchedule}" varStatus="loop">
                 <c:set var="showDate" value="${srs.screeningSchedule.showDate}" />
+                <c:set var="dateParts" value="${fn:split(showDate, '-')}" />
+                <c:set var="formattedDate" value="${dateParts[2]}/${dateParts[1]}/${dateParts[0]}" />
                 
                 <c:if test="${showDate != currentDate}">
                     <c:if test="${not isFirst}">
@@ -45,7 +48,7 @@
                     </c:if>
                     
                     <div class="date-group">
-                        <h2 class="date-header">${showDate}</h2>
+                        <h2 class="date-header">${formattedDate}</h2>
                         <div class="time-links">
                     
                     <c:set var="currentDate" value="${showDate}" />
